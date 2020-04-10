@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.example.greg.nhldata.R
 import com.example.greg.nhldata.ui.main.viewmodel.LeagueViewModel
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class LeagueFragment : Fragment() {
 
@@ -25,8 +27,14 @@ class LeagueFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getTeams().observe(viewLifecycleOwner, Observer {
+            text_view.text = it.toString()
+        })
+    }
 
-//        viewModel.
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadTeams()
     }
 
 }

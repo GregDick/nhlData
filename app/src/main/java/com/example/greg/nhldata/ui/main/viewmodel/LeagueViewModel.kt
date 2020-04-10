@@ -1,24 +1,25 @@
 package com.example.greg.nhldata.ui.main.viewmodel
 
+import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.greg.nhldata.ui.main.datamodel.Team
+import com.example.greg.nhldata.ui.main.repository.Repository
 
 class LeagueViewModel : ViewModel() {
 
-    private val teams: MutableLiveData<List<Team>> by lazy {
-        MutableLiveData<List<Team>>().also {
-            loadTeams()
-        }
-    }
+    private val repository = Repository()
+
+    private val teams = MutableLiveData<List<Team>>()
 
     fun getTeams() : LiveData<List<Team>> {
         return teams
     }
 
-    private fun loadTeams() {
-        val teamList = mutableListOf<Team>()
-        teams.value = teamList
+    fun loadTeams() {
+        kotlin.run {
+            teams.postValue(repository.getTeams())
+        }
     }
 }
