@@ -1,6 +1,8 @@
 package com.example.greg.nhldata.ui.main.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.greg.nhldata.ui.main.datamodel.League
 import com.example.greg.nhldata.ui.main.datamodel.Team
 import com.example.greg.nhldata.ui.main.network.NhlApiService
@@ -26,7 +28,8 @@ class Repository {
 
     var service: NhlApiService = retrofit.create<NhlApiService>(NhlApiService::class.java)
 
-    fun getTeams() : List<Team>{
+    fun getTeams() : MutableLiveData<List<Team>>{
+        val liveData = MutableLiveData<List<Team>>()
         val teamList = mutableListOf<Team>()
 
         service.getTeams().enqueue(object: Callback<League> {
@@ -44,11 +47,12 @@ class Repository {
                         Log.d(TAG, "team: $it")
                         teamList.add(it)
                     }
+                    liveData.value = teamList
                 }
             }
         })
 
-        return teamList
+        return liveData
     }
 
 

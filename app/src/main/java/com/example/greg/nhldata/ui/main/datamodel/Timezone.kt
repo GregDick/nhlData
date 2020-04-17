@@ -1,7 +1,7 @@
 package com.example.greg.nhldata.ui.main.datamodel
 
-data class Conference(
+data class Timezone(
     val id: String,
-    val name: String,
-    val link: String
+    val offset: Int,
+    val tz: String
 )

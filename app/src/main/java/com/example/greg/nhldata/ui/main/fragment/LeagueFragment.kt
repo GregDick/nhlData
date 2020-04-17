@@ -8,8 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.greg.nhldata.R
+import com.example.greg.nhldata.ui.main.datamodel.Team
 import com.example.greg.nhldata.ui.main.viewmodel.LeagueViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LeagueFragment : Fragment() {
 
@@ -27,14 +31,19 @@ class LeagueFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getTeams().observe(viewLifecycleOwner, Observer {
-            text_view.text = it.toString()
+        viewModel.teams.observe(viewLifecycleOwner, Observer { teamList ->
+            if (teamList.isNotEmpty()) {
+                var textString = ""
+                teamList.forEach {
+                    textString += it.toString() + "\n\n"
+                }
+                text_view.text = textString
+            }
         })
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadTeams()
     }
 
 }

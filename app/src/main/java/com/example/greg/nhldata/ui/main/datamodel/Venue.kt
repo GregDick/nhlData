@@ -1,5 +1,8 @@
 package com.example.greg.nhldata.ui.main.datamodel
 
-class Venue {
-
-}
+data class Venue(
+    val name: String,
+    val link: String,
+    val city: String,
+    val timeZone: Timezone
+)

@@ -11,15 +11,5 @@ class LeagueViewModel : ViewModel() {
 
     private val repository = Repository()
 
-    private val teams = MutableLiveData<List<Team>>()
-
-    fun getTeams() : LiveData<List<Team>> {
-        return teams
-    }
-
-    fun loadTeams() {
-        kotlin.run {
-            teams.postValue(repository.getTeams())
-        }
-    }
+    val teams : LiveData<List<Team>> = repository.getTeams()
 }
