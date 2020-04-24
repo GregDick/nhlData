@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.greg.nhldata.R
+import com.example.greg.nhldata.ui.main.adapter.LeagueAdapter
 import com.example.greg.nhldata.ui.main.datamodel.Team
 import com.example.greg.nhldata.ui.main.viewmodel.LeagueViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -16,6 +19,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class LeagueFragment : Fragment() {
+    private lateinit var leagueAdapter: LeagueAdapter
 
     companion object {
         fun newInstance() = LeagueFragment()
@@ -31,19 +35,19 @@ class LeagueFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.teams.observe(viewLifecycleOwner, Observer { teamList ->
-            if (teamList.isNotEmpty()) {
-                var textString = ""
-                teamList.forEach {
-                    textString += it.toString() + "\n\n"
-                }
-                text_view.text = textString
+
+        context?.let {
+            leagueAdapter = LeagueAdapter(it)
+            league_recycler.adapter = leagueAdapter
+            league_recycler.layoutManager = LinearLayoutManager(it)
+        }
+
+        viewModel.teams.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
+                leagueAdapter.teamsList = it
+                leagueAdapter.notifyDataSetChanged()
             }
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
 }

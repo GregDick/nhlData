@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">nhlData</string>
+    <string name="team_name_established">%1s est. %2s</string>
 </resources>
