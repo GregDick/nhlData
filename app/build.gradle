@@ -16,6 +16,10 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.example.greg.nhldata"
         minSdkVersion 23

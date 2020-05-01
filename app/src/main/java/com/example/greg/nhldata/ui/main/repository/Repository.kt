@@ -21,12 +21,12 @@ class Repository {
         .add(KotlinJsonAdapterFactory())
         .build()
 
-    private var retrofit = Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 
-    var service: NhlApiService = retrofit.create(NhlApiService::class.java)
+    private val service: NhlApiService = retrofit.create(NhlApiService::class.java)
 
     suspend fun getLeague(): League {
         Log.d(TAG, "inside repository suspend function")
