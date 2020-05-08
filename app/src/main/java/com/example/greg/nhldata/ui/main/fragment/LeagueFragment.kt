@@ -12,15 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.greg.nhldata.R
 import com.example.greg.nhldata.databinding.MainFragmentBinding
 import com.example.greg.nhldata.ui.main.adapter.LeagueAdapter
-import com.example.greg.nhldata.ui.main.viewmodel.LeagueViewModel
+import com.example.greg.nhldata.ui.main.callback.LeagueFragmentCallback
+import com.example.greg.nhldata.ui.main.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
 
-class LeagueFragment : Fragment() {
+class LeagueFragment : Fragment(), LeagueFragmentCallback {
 
     private lateinit var binding: MainFragmentBinding
     private lateinit var leagueAdapter: LeagueAdapter
 
-    private val viewModel: LeagueViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +35,7 @@ class LeagueFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         context?.let {
-            leagueAdapter = LeagueAdapter(it)
+            leagueAdapter = LeagueAdapter(it, this)
             league_recycler.adapter = leagueAdapter
             league_recycler.layoutManager = LinearLayoutManager(it)
         }
@@ -49,6 +50,16 @@ class LeagueFragment : Fragment() {
                 leagueAdapter.notifyDataSetChanged()
             }
         })
+    }
+
+    override fun fetchRoster(teamId: String) {
+        viewModel.fetchRoster(teamId)
+    }
+
+    override fun navigateToRosterFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.container, RosterFragment.newInstance())
+            .commitNow()
     }
 
     companion object {

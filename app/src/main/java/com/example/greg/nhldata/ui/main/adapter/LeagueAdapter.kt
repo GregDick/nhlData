@@ -5,10 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greg.nhldata.R
+import com.example.greg.nhldata.ui.main.callback.LeagueFragmentCallback
 import com.example.greg.nhldata.ui.main.datamodel.Team
 import kotlinx.android.synthetic.main.team_item.view.*
 
-class LeagueAdapter(private val context: Context) : RecyclerView.Adapter<LeagueViewHolder>() {
+class LeagueAdapter(
+    private val context: Context,
+    private val callback: LeagueFragmentCallback
+) : RecyclerView.Adapter<LeagueViewHolder>() {
 
     var teamsList = emptyList<Team>()
 
@@ -23,8 +27,14 @@ class LeagueAdapter(private val context: Context) : RecyclerView.Adapter<LeagueV
 
     override fun onBindViewHolder(holder: LeagueViewHolder, position: Int) {
         val team = teamsList[position]
-        holder.itemView.team_name.text = context.getString(R.string.team_name_established, team.teamName, team.firstYearOfPlay)
+        holder.itemView.team_name.text =
+            context.getString(R.string.team_name_established, team.teamName, team.firstYearOfPlay)
         holder.itemView.team_location.text = team.locationName
         holder.itemView.team_url.text = team.officialSiteUrl
+
+        holder.itemView.setOnClickListener {
+            callback.navigateToRosterFragment()
+            callback.fetchRoster(team.id.toString())
+        }
     }
 }

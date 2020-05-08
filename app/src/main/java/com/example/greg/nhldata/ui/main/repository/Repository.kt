@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.greg.nhldata.ui.main.datamodel.League
+import com.example.greg.nhldata.ui.main.datamodel.Roster
 import com.example.greg.nhldata.ui.main.datamodel.Team
 import com.example.greg.nhldata.ui.main.network.NhlApiService
 import com.squareup.moshi.Moshi
@@ -29,8 +30,13 @@ class Repository {
     private val service: NhlApiService = retrofit.create(NhlApiService::class.java)
 
     suspend fun getLeague(): League {
-        Log.d(TAG, "inside repository suspend function")
+        Log.d(TAG, "Repository get league")
         return service.getTeams()
+    }
+
+    suspend fun getRoster(id: String): Roster {
+        Log.d(TAG, "Repository get roster")
+        return service.getRoster(id)
     }
 
     companion object {
