@@ -25,7 +25,9 @@ class RosterAdapter(private val context: Context) : RecyclerView.Adapter<RosterV
     override fun onBindViewHolder(holder: RosterViewHolder, position: Int) {
         val player = playerList[position]
         Log.v("roster adapter", "player: $player")
-        holder.itemView.player_text.text = player.toString()
+        holder.itemView.player_number.text = context.getString(R.string.player_number, player.jerseyNumber)
+        holder.itemView.player_name.text = player.person.fullName
+        holder.itemView.player_pos.text = player.position.name
     }
 
 }

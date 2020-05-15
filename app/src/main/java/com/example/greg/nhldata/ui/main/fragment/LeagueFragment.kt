@@ -59,7 +59,8 @@ class LeagueFragment : Fragment(), LeagueFragmentCallback {
     override fun navigateToRosterFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.container, RosterFragment.newInstance())
-            .commitNow()
+            .addToBackStack(this::javaClass.name)
+            .commit()
     }
 
     companion object {
