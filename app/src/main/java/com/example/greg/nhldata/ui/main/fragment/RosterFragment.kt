@@ -53,7 +53,7 @@ class RosterFragment : Fragment() {
         }
 
         viewModel.roster.observe(viewLifecycleOwner, Observer {
-            Log.v("viewmodel", "player list: $it")
+            Log.d("viewmodel", "player list: $it")
             rosterAdapter.playerList = it
             rosterAdapter.notifyDataSetChanged()
         })

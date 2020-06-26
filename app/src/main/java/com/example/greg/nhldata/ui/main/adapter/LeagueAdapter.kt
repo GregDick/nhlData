@@ -33,8 +33,8 @@ class LeagueAdapter(
         holder.itemView.team_url.text = team.officialSiteUrl
 
         holder.itemView.setOnClickListener {
-            callback.navigateToRosterFragment()
             callback.fetchRoster(team.id.toString())
+            callback.navigateToRosterFragment()
         }
     }
 }

@@ -19,16 +19,8 @@ import javax.inject.Inject
 
 class Repository @Inject constructor() {
 
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .build()
-
-    private val service: NhlApiService = retrofit.create(NhlApiService::class.java)
+    @Inject
+    lateinit var service: NhlApiService
 
     suspend fun getLeague(): League {
         Log.d(TAG, "Repository get league")
@@ -36,7 +28,7 @@ class Repository @Inject constructor() {
     }
 
     suspend fun getRoster(id: String): Roster {
-        Log.d(TAG, "Repository get roster")
+        Log.d(TAG, "Repository get roster for: $id")
         return service.getRoster(id)
     }
 
