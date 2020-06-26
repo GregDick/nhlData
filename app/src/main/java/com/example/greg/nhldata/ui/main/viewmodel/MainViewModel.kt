@@ -9,10 +9,12 @@ import com.example.greg.nhldata.ui.main.datamodel.Team
 import com.example.greg.nhldata.ui.main.repository.Repository
 import com.example.greg.nhldata.ui.main.repository.Repository.Companion.TAG
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+class MainViewModel @Inject constructor (
+    private val repository: Repository
+) : ViewModel() {
 
-    private val repository = Repository()
     var loadingState = MutableLiveData<Boolean>()
     var teams = MutableLiveData<List<Team>>()
     var roster = MutableLiveData<List<Player>>()

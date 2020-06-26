@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.greg.nhldata.R
@@ -14,14 +13,18 @@ import com.example.greg.nhldata.databinding.MainFragmentBinding
 import com.example.greg.nhldata.ui.main.adapter.LeagueAdapter
 import com.example.greg.nhldata.ui.main.callback.LeagueFragmentCallback
 import com.example.greg.nhldata.ui.main.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.main_fragment.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LeagueFragment : Fragment(), LeagueFragmentCallback {
 
     private lateinit var binding: MainFragmentBinding
     private lateinit var leagueAdapter: LeagueAdapter
 
-    private val viewModel: MainViewModel by activityViewModels()
+    @Inject
+    lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
