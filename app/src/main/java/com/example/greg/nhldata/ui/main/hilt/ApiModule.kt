@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -16,6 +17,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @InstallIn(ActivityRetainedComponent::class)
 object ApiModule {
 
+    @ActivityRetainedScoped
     @Provides
     fun provideNhlApiService() : NhlApiService {
         return Retrofit.Builder()
